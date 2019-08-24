@@ -1,0 +1,16 @@
+.border-danger {
+    border-color: #450000 !important;
+}
+
+.bg-danger {
+    background-color: #ebc7c7 !important;
+}
+
+.bg-success {
+    background-color: #cfebc7 !important;
+}
+
+img {
+    max-height: 100px;
+    max-width: 100px;
+}

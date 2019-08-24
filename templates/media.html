@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load posts_extras %}
+{% load static %}
+
+{% block title %}
+| Медиа
+{% endblock %}
+
+{% block style %}
+<link href="{% static "css/media.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+{% for post in media %}
+    {% for thumb, file in post.thumbs|zip:post.files %}
+    <div class="col-2 px-0 mb-2">
+        <div class="row d-flex justify-content-center mx-0">
+            <a href="{{ file }}"><img src="{{ thumb }}" alt="" class="img img-fluid"></a>
+        </div>
+        <div class="row d-flex mx-0 justify-content-around">
+            <p class="pb-0"><a href="{{ post.link }}">{{ post.notions }}</a></p>
+            {% if post.is_op == True %}
+            <p class="pb-0">ОП</p>
+            {% else %}
+            <p class="pb-0">Не ОП</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+{% endfor %}
+</div>
+{% endblock %}

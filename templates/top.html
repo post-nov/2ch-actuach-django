@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load top_extras %}
+
+{% block title %}
+| Топ
+{% endblock %}
+
+
+<!-- Custom styles -->
+{% block style %}
+<link href="{% static 'css/top.css' %}" rel="stylesheet">
+{% endblock style %}
+
+<!-- Block content -->
+{% block content %}
+<div class="bg-white p-2">
+    <h2 class='text-center'>Лучшие посты двача на {% now "H:i" %}</h2>
+    <h3>С ОПом</h3>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>Содержание</th>
+                <th>Ответов</th>
+                <th>Дата</th>
+                <th>Медиа</th>
+            </tr>
+        </thead>
+        {% for post in posts_w_op %}
+        <tbody>
+            <th>{{ forloop.counter }}</th>
+            <th><a href="{{ post.link }}">{{ post.content|truncatewords:7|remove_br|safe }}</a></th>
+            <th>{{ post.notions }}</th>
+            <th>{{ post.date|date:"d/m/y" }} {{ post.date|time:"H:i" }}</th>
+            <th>
+                {% if post.files %}
+                    Есть
+                {% else %}
+                    Нет
+                {% endif %}
+            </th>
+        </tbody>
+        {% endfor %}
+    </table>
+    <h3>Без ОПа</h3>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>Содержание</th>
+                <th>Ответов</th>
+                <th>Дата</th>
+                <th>Медиа</th>
+            </tr>
+        </thead>
+        {% for post in posts_wo_op %}
+        <tbody>
+            <th>{{ forloop.counter }}</th>
+            <th><a href="{{ post.link }}">{{ post.content|truncatewords:7|remove_br|safe }}</a></th>
+            <th>{{ post.notions }}</th>
+            <th>{{ post.date|date:"d/m/y" }} {{ post.date|time:"h:i" }}</th>
+            <th>
+                {% if post.files %}
+                    Есть
+                {% else %}
+                    Нет
+                {% endif %}
+            </th>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}

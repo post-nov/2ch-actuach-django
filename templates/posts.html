@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load posts_extras %}
+
+{% block title %}
+| Посты
+{% endblock %}
+
+{% block style %}
+<link href="{% static "css/posts.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<section class="jumbotron text-center bg-transparent p-3">
+    <div class="container mb-3">
+        <h1 class="jumbotron-heading">Двач актуальный</h1>
+        <p class="lead text-muted">Самые годные и интересные посты за последнее время.</p>
+    </div>
+</section>
+
+<div class="row">
+
+    <!-- SORT BY -->
+    <form class="col-md-2 position-sticky" action="/posts/" method="get">
+        <h4>Настройки</h4>
+        {{ form.as_p }}
+        <button type="submit">Отобразить</button>
+    </form>
+
+
+<div class="col-md-10">
+    {% for post in posts %}
+    {% if post.is_op == True %}
+    <div class="container rounded bg-danger mb-3 p-0 ">
+        {% endif %}
+        {% if post.is_op == False %}
+        <!-- <div class="container border border-success rounded bg-success mb-3 p-0 "> -->
+        <div class="container rounded bg-success mb-3 p-0 ">
+            {% endif %}
+            <div class="row no-gutters">
+                <div class="col">
+                    <div class="row post-head mx-2 no-gutters">
+                        <div class="d-flex justify-content-end mt-1">
+                            <div class="d-flex justify-content-start">
+                                {% if post.is_op == True %}
+                                <p class="mb-0 mr-2 text-danger">ОП</p>
+                                {% endif %}
+                                {% if post.is_op == False %}
+                                <p class="mb-0 mr-2 text-success">НЕ ОП</p>
+                                {% endif %}
+                                <p class="mb-0 mr-2">{{ post.date|date:"d/m/y" }} {{ post.date|time:"h:i" }}</p>
+                                <p class="mb-0 mr-2">{{ post.notions }} упоминани{{ post.notions|pluralize:"я,й" }}</p>
+                                <p class="mb-0 mr-2"><span class="font-weight-bold"><a href="{{ post.link }}">&gt;&gt;{{ post.number }}</a></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% if post.content %}
+                    <hr class="my-1">
+                    <div class="row mx-2 no-gutters">
+                        <div class="col">
+
+                            <p class="my-1">{{ post.content|truncatewords:100|safe }}</p>
+                            {% if '<strong>' in post.content|safe %}
+                            </strong>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if post.thumbs %}
+                    <hr class="my-0">
+                    <div class="d-flex d-flex-row mx-2 my-2 justify-content-start">
+                        {# {% for image in post.thumbs %} #}
+                        {% for image, link in post.thumbs|zip:post.files %}
+                        {# <img src="{{ image }}" alt="" class="img img-fluid my-2 ml-0 mr-2"> #}
+                        <a href="{{ link }}"><img src="{{ image }}" alt="" class="img img-fluid my-2 ml-0 mr-2"></a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <hr class="my-0">
+                    <div class="row mx-2 no-gutters">
+                        <div class="col post-head d-flex justify-content-start mt-1 mb-0">
+                            <p class="mb-1 mr-2"><a href="{% url 'post' post.number %}">Подробнее</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+        <!-- PAGINATION -->
+        <div class="pagination d-flex justify-content-center my-3">
+            <span class="step-links">
+                {% if posts.has_previous %}
+                <a href="?page=1">&laquo;&laquo;</a>
+                <a href="?page={{ posts.previous_page_number }}">&laquo;</a>
+                {% endif %}
+
+                <span class="current">
+                    {{ posts.number }} из {{ posts.paginator.num_pages }}.
+                </span>
+
+                {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}">&raquo;</a>
+                <a href="?page={{ posts.paginator.num_pages }}">&raquo;&raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+
+    </div>
+</div>
+{% endblock content %}

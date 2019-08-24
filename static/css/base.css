@@ -1,0 +1,84 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding-top: 5rem;
+  margin-bottom: 60px; /* Margin bottom by footer height */
+}
+html {
+  position: relative;
+  min-height: 100%;
+}
+.grey-back {
+	background-color: #dadada;
+}
+
+#main {
+    max-width: 500px;
+}
+
+/*JUMBOTRON HEAD FOR THE SAKE OF WHY NOT*/
+:root {
+  --jumbotron-padding-y: 3rem;
+}
+
+.jumbotron {
+  padding-top: var(--jumbotron-padding-y);
+  padding-bottom: var(--jumbotron-padding-y);
+  margin-bottom: 0;
+  background-color: #fff;
+}
+@media (min-width: 768px) {
+  .jumbotron {
+    padding-top: calc(var(--jumbotron-padding-y) * 2);
+    padding-bottom: calc(var(--jumbotron-padding-y) * 2);
+  }
+}
+
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
+
+.jumbotron-heading {
+  font-weight: 300;
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+}
+
+
+/*CARD SETTINGS*/
+.card-header, .card-header * {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0;
+}
+.card-footer, .card-footer > * {
+/*	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	align-text: right;*/
+	margin: 0;
+}
+
+/*CAROUSEL*/
+.carousel-item {
+	height: 200px;
+}
